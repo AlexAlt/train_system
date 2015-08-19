@@ -54,7 +54,7 @@ describe('viewing edit form for a train', {:type => :feature}) do
     test_train = Train.new({:name => "Green", :id => nil})
     test_train.save()
     visit("/trains/#{test_train.id()}")
-    click_on("Edit")
+    click_link("Edit")
     expect(page).to have_content("Green")
   end
 end
@@ -76,6 +76,6 @@ describe('deleting a train', {:type => :feature}) do
     test_train.save()
     visit("/trains/#{test_train.id()}/edit")
     click_button("Delete Train")
-    expect(page).to have_content("Trains")
+    expect(page).to have_content("Success!")
   end
 end

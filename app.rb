@@ -66,5 +66,5 @@ delete('/trains/:id') do
   @train = Train.find(params.fetch("id").to_i())
   @train.delete()
   @trains = Train.all()
-  erb(:index)
+  erb(:success)
 end
