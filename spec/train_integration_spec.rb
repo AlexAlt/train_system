@@ -10,7 +10,7 @@ set(:show_exceptions, false)
 describe('to home path', {:type => :feature}) do
   it('allows you to add a train') do
     visit('/')
-    fill_in('name', :with => "Green")
+    fill_in('train_name', :with => "Green")
     click_button('Add Train')
     expect(page).to have_content("Success!")
   end
@@ -24,6 +24,16 @@ describe('to train details page', {:type => :feature}) do
     test_city.save()
     visit('/')
     click_link('Green')
+    expect(page).to have_content('Portland')
+  end
+end
+
+describe('to city details page', {:type => :feature}) do
+  it('shows you the details for an individual city') do
+    test_city = City.new({:name => 'Portland', :train_id => nil, :id => nil})
+    test_city.save()
+    visit('/')
+    click_link('Portland')
     expect(page).to have_content('Portland')
   end
 end

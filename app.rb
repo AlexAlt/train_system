@@ -10,11 +10,12 @@ DB = PG.connect({:dbname => "train_system_test"})
 
 get('/') do
   @trains = Train.all()
+  @cities= City.all()
   erb(:index)
 end
 
 post('/trains') do
-  name = params.fetch("name")
+  name = params.fetch("train_name")
   new_train = Train.new({:name => name, :id => nil})
   new_train.save()
   @trains = Train.all()
@@ -24,6 +25,19 @@ end
 get('/trains/:id') do
   @train = Train.find(params.fetch("id").to_i())
   erb(:trains)
+end
+
+post('/new_cities') do
+  name = params.fetch("city_name")
+  new_city = City.new({:name => name, :id => nil, :train_id => nil})
+  new_city.save()
+  @cities = City.all()
+  erb(:success)
+end
+
+get('/cities/:id') do
+  @city = City.find(params.fetch("id").to_i())
+  erb(:cities)
 end
 
 post('/cities') do

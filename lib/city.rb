@@ -32,6 +32,16 @@ class City
     @id = result.first().fetch('id').to_i()
   end
 
+  define_singleton_method(:find) do |id|
+    found_cities = nil
+    City.all().each() do |city|
+      if city.id() == id
+        found_cities = city
+      end
+    end
+    found_cities
+  end
+
   define_method(:update) do |attributes|
     @name = attributes.fetch(:name)
     @id = self.id
