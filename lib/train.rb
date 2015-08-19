@@ -35,6 +35,7 @@ class Train
 
   define_method(:delete) do
     DB.exec("DELETE FROM trains WHERE id = #{self.id()};")
+    DB.exec("DELETE FROM cities WHERE train_id = #{self.id()};")
   end
 
   define_singleton_method(:find) do |id|
