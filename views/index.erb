@@ -1,0 +1,15 @@
+<h1>Trains</h1>
+
+<ul>
+  <% @trains.each() do |train| %>
+    <li> <a href="/trains/<%= train.id() %>"><%= list.name() %></a></li>
+  <% end %>
+</ul>
+
+
+<form action='/trains' method='post'>
+  <label for="name"> Add a new train</label>
+  <input id="name" name="name" type="text">
+
+  <button type='submit'>Add Train</button>
+</form>

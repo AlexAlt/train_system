@@ -46,4 +46,21 @@ class Train
     end
     found_trains
   end
+
+  define_method(:cities) do
+    returned_cities = DB.exec("SELECT * FROM cities WHERE train_id = #{@id};")
+    cities = []
+    returned_cities.each() do |city|
+      name = city.fetch('name')
+      id = city.fetch('id').to_i()
+      train_id = city.fetch('train_id').to_i()
+      cities.push(City.new({:id => id, :name => name, :train_id => train_id}))
+    end
+    cities
+  end
+
+  define_method(:add_cities) do |city|
+    city.train_id = @id
+    DB.exec("UPDATE cities SET train_id = #{@id} WHERE id = #{city.id()};")
+  end
 end
