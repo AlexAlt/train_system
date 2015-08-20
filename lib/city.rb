@@ -54,7 +54,9 @@ class City
       train_id = result.fetch("train_id").to_i()
       train = DB.exec("SELECT * FROM trains where id = #{train_id};")
       name = train.first().fetch("name")
+
       trains_cities.push(Train.new({:name => name, :id => train_id}))
+      binding.pry
     end
     trains_cities
   end

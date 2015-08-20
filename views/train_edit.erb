@@ -2,11 +2,22 @@
 
 <form action="/trains/<%= @train.id() %>" method="post">
   <input type="hidden" name="_method" value="patch">
-  <label for="name">Rename your train:</label>
-  <input type="text" name="name" id="name">
-
-  <button type="submit">Update</button>
+  <% if @cities.any?() %>
+    <label for="city_id">Select a City</label>
+    <select id='city_id' name='city_id' type='text'>
+      <% @cities.each() do |city| %>
+      <option value="<%= city.id()%>"> <%= city.name() %> </option>
+      <% end %>
+    </select>
+    <button type="submit">Add Cities</button>
+  <% end %>
 </form>
+
+<!-- <form action="/trains/<%= @train.id() %>" method="post">
+  <input type="hidden" name="_method" value="patch">
+  <label for="name">:</label>
+  <input type="text" name="name" id="name"> -->
+
 
 <form action="/trains/<%= @train.id()%>" method="post">
   <input type="hidden" name="_method" value="delete">

@@ -20,7 +20,7 @@ describe('to train details page', {:type => :feature}) do
   it('shows you the details for an individual train') do
     test_train = Train.new({:name => 'Green', :id => nil})
     test_train.save()
-    test_city = City.new({:name => 'Portland', :train_id => test_train.id()})
+    test_city = City.new({:name => 'Portland', :id => nil})
     test_city.save()
     visit('/')
     click_link('Green')
@@ -30,7 +30,7 @@ end
 
 describe('to city details page', {:type => :feature}) do
   it('shows you the details for an individual city') do
-    test_city = City.new({:name => 'Portland', :train_id => nil, :id => nil})
+    test_city = City.new({:name => 'Portland', :id => nil})
     test_city.save()
     visit('/')
     click_link('Portland')

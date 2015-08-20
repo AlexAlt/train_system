@@ -14,14 +14,6 @@
 
   <% end %>
 
-<form action="/cities" method="post">
-  <input id="train_id" type="hidden" name="train_id" value="<%= @train.id() %>">
-  <label for="name">Add a City</label>
-  <input type="text" name="name" id="name" placeholder="City">
-
-  <button type="submit">Add</button>
-</form>
-
 <div class="container">
   <a href="/"><button class="btn">Home</a>
   <a href="/trains/<%= @train.id() %>/edit"><button class="btn">Edit</a>

@@ -1,1 +1,20 @@
 <h2><%= @city.name() %></h2>
+<% if @city.trains().any?() %>
+
+<% @city.trains().each() do |train| %>
+<ul>
+  <li><%= train.name() %></li>
+</ul>
+<% end %>
+
+<% else %>
+
+<p>There are no trains!</p>
+
+<% end %>
+
+
+<div class="container">
+  <a href="/"><button class="btn">Home</a>
+    <a href="/cities/<%= @city.id() %>/edit"><button class="btn">Edit</a>
+    </div>
