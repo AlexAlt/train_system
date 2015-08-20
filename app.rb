@@ -61,3 +61,17 @@ get('/cities/:id') do
   @city = City.find(params.fetch("id").to_i())
   erb(:cities)
 end
+
+get('/cities/:id/edit') do
+  @city = City.find(params.fetch("id").to_i)
+  @trains = Train.all()
+  erb(:city_edit)
+end
+patch('/cities/:id') do
+  city_id = params.fetch("id").to_i()
+  @city = City.find(city_id)
+  train_ids = params.fetch("train_id")
+  @city.update({:train_ids  => [train_ids]})
+  @trains = Train.all()
+  erb(:cities)
+end

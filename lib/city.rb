@@ -56,7 +56,6 @@ class City
       name = train.first().fetch("name")
 
       trains_cities.push(Train.new({:name => name, :id => train_id}))
-      binding.pry
     end
     trains_cities
   end
