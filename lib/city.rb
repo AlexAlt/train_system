@@ -1,11 +1,9 @@
 class City
-  attr_reader(:name, :id, :train_id)
-  attr_writer(:train_id)
+  attr_reader(:name, :id)
 
   define_method(:initialize) do |attributes|
     @name = attributes.fetch(:name)
     @id = attributes[:id]
-    @train_id = attributes[:train_id]
   end
 
   define_method(:==) do |another_city|
@@ -18,17 +16,13 @@ class City
     returned_cities.each() do |city|
       name = city.fetch('name')
       id = city.fetch('id').to_i()
-      train_id = city.fetch('train_id').to_i()
-      cities.push(City.new({:name => name, :train_id => train_id, :id => id}))
+      cities.push(City.new({:name => name, :id => id}))
     end
     cities
   end
 
   define_method(:save) do
-    if ! @train_id
-      @train_id = "NULL"
-    end
-    result = DB.exec("INSERT INTO cities (name, train_id) VALUES ('#{@name}', #{@train_id}) RETURNING id;")
+    result = DB.exec("INSERT INTO cities (name) VALUES ('#{@name}') RETURNING id;")
     @id = result.first().fetch('id').to_i()
   end
 
@@ -43,9 +37,26 @@ class City
   end
 
   define_method(:update) do |attributes|
-    @name = attributes.fetch(:name)
+    @name = attributes.fetch(:name, @name)
     @id = self.id
     DB.exec("UPDATE cities SET name = '#{@name}' WHERE id = #{@id};")
+
+    attributes.fetch(:train_ids, []).each() do |train_id|
+      DB.exec("INSERT INTO trains_cities (train_id, city_id) VALUES (#{train_id}, #{self.id()});")
+    end
+
+  end
+
+  define_method(:trains) do
+    trains_cities = []
+    results = DB.exec("SELECT train_id FROM trains_cities WHERE city_id = #{self.id()};")
+    results.each() do |result|
+      train_id = result.fetch("train_id").to_i()
+      train = DB.exec("SELECT * FROM trains where id = #{train_id};")
+      name = train.first().fetch("name")
+      trains_cities.push(Train.new({:name => name, :id => train_id}))
+    end
+    trains_cities
   end
 
   define_method(:delete) do

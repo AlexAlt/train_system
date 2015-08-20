@@ -32,6 +32,30 @@ describe(Train) do
       test_train.update({:name => "Red"})
       expect(test_train.name()).to(eq("Red"))
     end
+
+    it('lets you add a city to the train')do
+      test_train = Train.new({:name => "Green", :id => nil})
+      test_train.save()
+      test_city = City.new({:name => "Portland", :id => nil})
+      test_city.save()
+      test_city2 = City.new({:name => "Seattle", :id => nil})
+      test_city2.save()
+      test_train.update({:city_ids => [test_city.id(), test_city2.id()]})
+      expect(test_train.cities()).to(eq([test_city, test_city2]))
+    end
+  end
+
+  describe('#cities') do
+    it("returns all of the actors in a particular movie") do
+      test_train = Train.new({:name => "Green", :id => nil})
+      test_train.save()
+      test_city = City.new({:name => "Portland", :id => nil})
+      test_city.save()
+      test_city2 = City.new({:name => "Seattle", :id => nil})
+      test_city2.save()
+      test_train.update({:city_ids => [test_city.id(), test_city2.id()]})
+      expect(test_train.cities()).to(eq([test_city, test_city2]))
+    end
   end
 
   describe('#delete') do
@@ -52,24 +76,6 @@ describe(Train) do
       test_train2 = Train.new({:name => "Red", :id => nil})
       test_train2.save()
       expect(Train.find(test_train.id())).to(eq(test_train))
-    end
-  end
-
-  describe('#cities') do
-    it('returns all of the cities for the train') do
-      test_train = Train.new({:name => "Green", :id => nil})
-      test_train.save()
-    end
-  end
-
-  describe('#add_cities') do
-    it('adds a city to a train') do
-      test_train = Train.new({:name => "Green", :id => 2})
-      test_train.save()
-      test_city = City.new({:name => "Seattle", :train_id => nil})
-      test_city.save()
-      test_train.add_cities(test_city)
-      expect(test_train.cities()).to(eq([test_city]))
     end
   end
 end
